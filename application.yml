@@ -19,3 +19,25 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: todo-helm
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/adrn1201/todos-helm.git
+    targetRevision: HEAD
+    chart: .
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: todo-helm
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
